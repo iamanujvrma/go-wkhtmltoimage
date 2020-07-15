@@ -45,6 +45,8 @@ type ImageOptions struct {
 	//
 	// Leave nil to return a []byte of the image. Set to a path (/tmp/example.png) to save as a file.
 	Output string
+
+	DisableSmartWidth bool
 }
 
 // GenerateImage creates an image from an input.
@@ -91,6 +93,10 @@ func buildParams(options *ImageOptions) ([]string, error) {
 		a = append(a, options.Format)
 	} else {
 		a = append(a, "png")
+	}
+
+	if options.DisableSmartWidth {
+		a = append(a, "--disable-smart-width")
 	}
 
 	if options.Height != 0 {
